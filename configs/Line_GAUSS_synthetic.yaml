@@ -1,0 +1,96 @@
+# Line-GAUSS configuration for simulated PCB reconstruction
+
+# Projection-domain background weighting
+proj_bg_weight_enabled: false
+proj_bg_thr: 0.1
+proj_bg_weight: 0.5
+
+# Optional Poisson noise for simulated projections
+simu_poisson_enabled: false
+simu_poisson_n0: 1000000
+simu_poisson_seed: 42
+
+# Dataset
+air_threshold: 0
+batch_size: 1
+data: 3d
+dataset_name: phantom
+img_path: ""./data/phantom.npz"
+
+img_size:
+  - 30   # Depth
+  - 500  # Height
+  - 500  # Width
+
+display_image_num: 8
+voxel_spacing: 0.03
+
+# BP-guided Gaussian initialization
+ini_intensity: 0.01
+ini_sigma: 0.15
+start: 0
+num_gaussian: 30000
+spatial_lr_scale: 1
+mix_fb: 0.5
+mix_grad: 0.75
+
+# Coarse-to-fine optimization
+low_reso_stage: 5000
+max_iter: 15000
+log_iter: 500
+val_iter: 500
+checkpoint_save_iter: 1000
+
+# Gaussian density control
+do_density_control: true
+densification_interval: 100
+densify_from_iter: 0
+densify_until_iter: 15000
+max_gaussians: 300000
+max_grad: 1.0e-05
+min_intensity: 0.0001
+sigma_extent: 2
+
+# Line-TAAwTV
+line_awtv_tau: 1
+line_awtv_alpha_h: null
+line_awtv_alpha_w: null
+line_awtv_alpha_d: null
+line_awtv_beta_h: 0
+line_awtv_beta_w: 0.6
+line_awtv_beta_d: 0
+
+line_awtv_weight: 0.05
+line_awtv_weight_schedule: true
+line_awtv_weight_start: 3
+line_awtv_weight_end: 2
+line_awtv_weight_iters: 10000
+
+line_awtv_delta_cl: 0.5
+line_awtv_delta_schedule: false
+line_awtv_delta_start: 0.5
+line_awtv_delta_end: 0.5
+line_awtv_delta_iters: 1000
+
+# Optional projection-domain DSSIM
+lambda_dssim: 0
+dssim_window: 7
+
+# Sampling-aware Gaussian scale-space filtering
+smooth_filter_enabled: true
+smooth_filter_last_iters: 2000
+smooth_filter_s: 0.005
+smooth_filter_interval: 500
+smooth_filter_margin: 0.05
+smooth_filter_min_depth: 1.0e-4
+
+# Linear CT geometry
+source_det: 1000
+source_origin: 200
+dis_step: 5.5
+det_spacing: 0.1
+num_proj: 20
+
+proj_size:
+  - 1024  # Detector rows
+  - 1024  # Detector columns
